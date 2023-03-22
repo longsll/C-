@@ -1,0 +1,21 @@
+//重心是指树中的一个结点，如果将这个点删除后，剩余各个连通块中点数的最大值最小，那么这个节点被称为树的重心
+int dfs(int u)
+{
+    st[u] = true;
+
+    int size = 0, sum = 0;
+    for (int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if (st[j]) continue;
+
+        int s = dfs(j);
+        size = max(size, s);
+        sum += s;
+    }
+
+    size = max(size, n - sum - 1);
+    ans = min(ans, size);
+
+    return sum + 1;
+}

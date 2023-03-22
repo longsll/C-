@@ -1,0 +1,35 @@
+int p[N];
+int find(int x){
+    if(p[x] != x)p[x] = find(p[x]);
+    return p[x];
+}
+
+void merge(int a  ,int b){
+    if(find(a) != find(b)){
+        p[find(a)] = find(b);
+    }
+}
+
+void init( ){
+    for(int i = 1 ; i < N ; i ++)p[i] = i;
+}
+
+//带权
+int find(int x){
+	if (x != p[x]){
+		int t = p[x];
+		p[x] = find(p[x]);
+		d[x] += d[t];
+	}
+	return p[x];
+}
+
+void merge(int a  ,int b){
+    int px = find(x);
+    int py = find(y);
+    if (px != py){
+        p[px] = py;
+        //d[px] = -d[x] + d[y] + s;
+    }
+}
+

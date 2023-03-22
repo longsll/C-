@@ -1,0 +1,24 @@
+bool find(int x)
+{
+    for (int i = h[x]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if (!st[j])
+        {
+            st[j] = true;
+            if (match[j] == 0 || find(match[j]))
+            {
+                match[j] = x;
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+for (int i = 1; i <= n1; i ++ )
+{
+    memset(st, false, sizeof st);
+    if (find(i)) res ++ ;
+}

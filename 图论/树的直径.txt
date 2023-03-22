@@ -1,0 +1,39 @@
+// 朴素dfs O(n^2)
+int dfs1(int u , int father)
+{
+    int maxr = 0;
+    for(int i = u ; ~i ; i = ne[i]){
+        int j = e[i];
+        if(j == father)continue;
+        maxr = max(maxr , dfs1(j , u) + w[i]);
+    }
+    return maxr;
+}
+//两次dfs
+int dfs2(int u ,int father ,int dist)
+{
+    for(int i = u ; ~i ; i = ne[i]){
+        int j = e[i];
+        if(j == father)continue;
+        dfs2(j , u , dist + w[i]);
+    }
+    if(dist > ans){
+        ans = dist;
+        t = u;
+    }
+}
+// 树形DP
+int dfs(int u ,int father)
+{
+    int dist = 0 , d1 = 0 ,d2 = 0;
+    for(int i = h[u] ; i!= -1 ; i = ne[i]){
+        int j = e[i];
+        if(j == father)continue;
+        int d = dfs(j , u) + w[i];
+        dist = max(dist ,d);
+        if(d >= d1)d2 = d1 , d1 = d;
+        else if(d > d2)d2 = d;
+    }
+    ans = max(ans , d1 + d2);
+    return dist;
+}

@@ -1,0 +1,32 @@
+int dp[12][15] , a[15] , b[15];
+int l , r , len;
+
+void init(int x)
+{
+	int p = 0;
+	while(x)b[p ++] =x % 10 , x /= 10;
+	for(len = 0 ,p --; len <= p ;len ++){
+    	a[len] = b[p - len]; 
+	}	
+}
+
+int dfs(int i , int j ,int islimit ,int isnum)
+{
+	if(i == len) return 1;
+	if(!islimit && isnum && dp[i][j] != -1)return dp[i][j];
+	int res = 0 , up = islimit ? a[i] : 9;
+	for (int k = 0 ; k <= up ; k ++){
+		if(isnum && abs(j - k) < 2)continue;
+		if(!isnum && k == 0) res += dfs(i + 1 , k , islimit && k == up ,0);
+		else res += dfs(i + 1 , k , islimit && k == up ,1);
+	}	
+	if(!islimit && isnum)dp[i][j] = res;
+	return res;
+}
+
+int cal(int x)
+{
+	memset(dp , -1 ,sizeof dp);
+	init(x);
+	return dfs(0 ,0 ,1 ,0);
+}

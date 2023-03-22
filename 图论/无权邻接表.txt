@@ -1,0 +1,13 @@
+
+const int N = 100010, M = N * 2;
+
+int h[N], e[M], ne[M], idx;
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void init(){
+    memset(h, -1, sizeof h);
+}

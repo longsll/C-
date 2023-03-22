@@ -1,0 +1,24 @@
+//p为子串 ，n为p长度 ， m为长度
+//输入下标从1开始
+int ne[N];
+char s[M] , p[N];
+void kmp(char s[] , char p[] , int n , int m)
+{
+    for (int i = 2, j = 0; i <= n; i ++ )
+    {
+        while (j && p[i] != p[j + 1]) j = ne[j];
+        if (p[i] == p[j + 1]) j ++ ;
+        ne[i] = j;
+    }
+
+    for (int i = 1, j = 0; i <= m; i ++ )
+    {
+        while (j && s[i] != p[j + 1]) j = ne[j];
+        if (s[i] == p[j + 1]) j ++ ;
+        if (j == n)
+        {
+            printf("%d ", i - n);
+            j = ne[j];
+        }
+    }
+}
